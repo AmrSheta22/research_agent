@@ -1,0 +1,9 @@
+{
+  "id": "nature",
+  "name": "Springer Nature (sn-jnl)",
+  "publisher": "Springer Nature",
+  "description": "Springer Nature and Nature journal template following the flagship Results-first and Methods-detailed manuscript structure.",
+  "document_class": "sn-jnl",
+  "columns": 1,
+  "default_bib_style": "sn-basic"
+}

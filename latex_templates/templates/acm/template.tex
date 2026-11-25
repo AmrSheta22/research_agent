@@ -1,0 +1,115 @@
+\IfFileExists{acmart.cls}{%
+  \documentclass[sigconf]{acmart}%
+}{%
+  \documentclass[10pt,twocolumn]{article}%
+  \usepackage[margin=0.75in]{geometry}%
+  \usepackage{authblk}%
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
+
+\title{\textbf{\VAR{title}}}
+
+\IfFileExists{acmart.cls}{}{%
+\BLOCK{for author in authors}
+\author[\VAR{loop.index}]{\textbf{\VAR{author.name}}}
+\affil[\VAR{loop.index}]{\VAR{author.affiliation}\BLOCK{if author.email}, \texttt{\VAR{author.email}}\BLOCK{endif}}
+\BLOCK{endfor}
+\date{\today}
+}
+
+\begin{document}
+
+\IfFileExists{acmart.cls}{%
+\BLOCK{for author in authors}
+\author{\VAR{author.name}}
+\affiliation{%
+  \institution{\VAR{author.affiliation}}
+  \BLOCK{if author.email}\country{\VAR{author.email}}\BLOCK{endif}
+}
+\BLOCK{endfor}
+
+\begin{abstract}
+\VAR{abstract}
+\end{abstract}
+
+\BLOCK{if keywords}
+\keywords{\VAR{keywords_joined}}
+\BLOCK{endif}
+
+\maketitle
+}{%
+\maketitle
+
+\begin{abstract}
+\VAR{abstract}
+\end{abstract}
+
+\BLOCK{if keywords}
+\noindent\textbf{Keywords:} \VAR{keywords_joined}
+\BLOCK{endif}
+\vspace{1em}
+}
+
+\section{Introduction}
+\label{sec:intro}
+\VAR{introduction}
+
+\BLOCK{if literature_review}
+\section{Background and Related Work}
+\label{sec:related}
+\VAR{literature_review_text}
+\BLOCK{endif}
+
+\section{Empirical Methodology and Study Design}
+\label{sec:methodology}
+\VAR{methodology}
+
+\BLOCK{if variables_table}
+\VAR{variables_table}
+\BLOCK{endif}
+
+\section{Statistical Evaluation and Results}
+\label{sec:results}
+\VAR{results_text}
+
+\BLOCK{if statistical_table}
+\VAR{statistical_table}
+\BLOCK{endif}
+
+\BLOCK{if figures_block}
+\VAR{figures_block}
+\BLOCK{endif}
+
+\section{Discussion and Threats to Validity}
+\label{sec:discussion}
+\BLOCK{if discussion}
+\VAR{discussion}
+\BLOCK{else}
+The findings must be considered in light of standard internal and external validity considerations.
+\BLOCK{endif}
+
+\BLOCK{if conclusion}
+\section{Conclusion and Future Directions}
+\label{sec:conclusion}
+\VAR{conclusion}
+\BLOCK{endif}
+
+\BLOCK{if has_bibliography}
+\IfFileExists{acmart.cls}{%
+  \bibliographystyle{ACM-Reference-Format}
+}{%
+  \bibliographystyle{plain}
+}
+\bibliography{\VAR{bib_filename}}
+\BLOCK{endif}
+
+\end{document}

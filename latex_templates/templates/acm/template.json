@@ -1,0 +1,9 @@
+{
+  "id": "acm",
+  "name": "ACM Conference & Journal (acmart)",
+  "publisher": "Association for Computing Machinery",
+  "description": "Standard ACM proceedings and journal format used across computing, informatics, and software systems.",
+  "document_class": "acmart",
+  "columns": 2,
+  "default_bib_style": "ACM-Reference-Format"
+}

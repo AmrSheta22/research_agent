@@ -1,0 +1,120 @@
+\IfFileExists{sn-jnl.cls}{%
+  \documentclass[sn-basic,Numbered]{sn-jnl}%
+}{%
+  \documentclass[11pt]{article}%
+  \usepackage[margin=1in]{geometry}%
+  \usepackage{authblk}%
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{textcomp}
+\providecommand{\permil}{\text{\textperthousand}}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
+
+\title{\textbf{\VAR{title}}}
+
+\IfFileExists{sn-jnl.cls}{%
+\BLOCK{for author in authors}
+\author*[\VAR{loop.index}]{\textbf{\VAR{author.name}}}
+\affil[\VAR{loop.index}]{\VAR{author.affiliation}\BLOCK{if author.email}, \texttt{\VAR{author.email}}\BLOCK{endif}}
+\BLOCK{endfor}
+}{%
+\BLOCK{for author in authors}
+\author[\VAR{loop.index}]{\textbf{\VAR{author.name}}}
+\affil[\VAR{loop.index}]{\VAR{author.affiliation}\BLOCK{if author.email}, \texttt{\VAR{author.email}}\BLOCK{endif}}
+\BLOCK{endfor}
+}
+
+\BLOCK{if not authors}
+\author{Author identities not supplied}
+\BLOCK{endif}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+\VAR{abstract}
+\end{abstract}
+
+\BLOCK{if keywords}
+\noindent\textbf{Keywords:} \VAR{keywords_joined}
+\BLOCK{endif}
+
+\bigskip
+
+\section{Introduction}
+\label{sec:intro}
+\VAR{introduction}
+
+\BLOCK{if literature_review}
+\section{Background and Related Work}
+\label{sec:background}
+\VAR{literature_review_text}
+\BLOCK{endif}
+
+% In Nature format, Results are presented prominently before Methods
+\section{Results and Findings}
+\label{sec:results}
+\VAR{results_text}
+
+\BLOCK{if statistical_table}
+\VAR{statistical_table}
+\BLOCK{endif}
+
+\BLOCK{if variance_table}
+\VAR{variance_table}
+\BLOCK{endif}
+
+\BLOCK{if figures_block}
+\VAR{figures_block}
+\BLOCK{endif}
+
+\BLOCK{if discussion}
+\section{Discussion}
+\label{sec:discussion}
+\VAR{discussion}
+\BLOCK{endif}
+
+% Methods in Nature are detailed and comprehensive
+\section{Methods}
+\label{sec:methods}
+\VAR{methodology}
+
+\BLOCK{if variables_table}
+\VAR{variables_table}
+\BLOCK{endif}
+
+\BLOCK{if conclusion}
+\section{Conclusion}
+\label{sec:conclusion}
+\VAR{conclusion}
+\BLOCK{endif}
+
+\section*{Declarations}
+\begin{itemize}
+    \item \textbf{Data Availability:} \VAR{data_availability_text}
+    \item \textbf{Code Availability:} \VAR{code_availability_text}
+    \item \textbf{Generative AI Tool Disclosure:} Language models assisted source screening, drafting, and automated review. Source-review scope and supporting quotations are recorded in the evidence audit. Automated checks do not establish independent author verification. Investigator approval is required.
+    \item \textbf{Competing Interests:} Investigator declaration has not been supplied.
+    \item \textbf{Author Contributions:} Investigator contributions have not been supplied.
+\end{itemize}
+
+\BLOCK{if has_bibliography}
+\IfFileExists{sn-jnl.cls}{%
+  \bibliographystyle{sn-basic}
+}{%
+  \bibliographystyle{plain}
+}
+\bibliography{\VAR{bib_filename}}
+\BLOCK{endif}
+
+\end{document}

@@ -1,0 +1,9 @@
+{
+  "id": "generic_arxiv",
+  "name": "arXiv / Generic Academic Preprint",
+  "publisher": "arXiv / Open Science",
+  "description": "Clean, universally compatible preprint layout using standard LaTeX packages. Perfect for arXiv, bioRxiv, and general journal submissions.",
+  "document_class": "article",
+  "columns": 1,
+  "default_bib_style": "plain"
+}

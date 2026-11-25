@@ -1,0 +1,9 @@
+{
+  "id": "ieee",
+  "name": "IEEE Conference & Transactions",
+  "publisher": "IEEE",
+  "description": "Standard two-column IEEE format for engineering, computer science, and applied sciences.",
+  "document_class": "IEEEtran",
+  "columns": 2,
+  "default_bib_style": "IEEEtran"
+}

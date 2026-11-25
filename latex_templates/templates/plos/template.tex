@@ -1,0 +1,107 @@
+\documentclass[10pt,letterpaper]{article}
+\usepackage[top=0.85in,left=2.75in,footskip=0.75in]{geometry}
+
+\usepackage{amsmath,amssymb}
+\usepackage{changepage}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp,marvosym}
+\usepackage{cite}
+\usepackage{nameref,hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
+\usepackage[right]{lineno}
+\usepackage{microtype}
+\DisableLigatures[f]{encoding = *, family = * }
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+
+% Adjust textwidth for margin notes
+\raggedright
+\setlength{\parindent}{0.5cm}
+\textwidth 5.25in 
+\textheight 8.75in
+
+\begin{document}
+\vspace*{0.2in}
+
+% Title
+\begin{flushleft}
+{\Large
+\textbf\newline{\VAR{title}}
+}
+\newline
+\\
+\BLOCK{for author in authors}
+\textbf{\VAR{author.name}}\textsuperscript{\VAR{loop.index}}\BLOCK{if not loop.last}, \BLOCK{endif}
+\BLOCK{endfor}
+\\
+\bigskip
+\BLOCK{for author in authors}
+\textbf{\VAR{loop.index}} \VAR{author.affiliation}\BLOCK{if author.email}, Email: \VAR{author.email}\BLOCK{endif}\\
+\BLOCK{endfor}
+\end{flushleft}
+
+% Abstract
+\section*{Abstract}
+\VAR{abstract}
+
+\BLOCK{if keywords}
+\bigskip
+\noindent\textbf{Keywords:} \VAR{keywords_joined}
+\BLOCK{endif}
+
+% PLOS Author Summary (hallmark of PLOS manuscripts)
+\section*{Author Summary}
+\BLOCK{if author_summary}
+\VAR{author_summary}
+\BLOCK{else}
+In this research investigation, we formulated and tested empirical hypotheses to evaluate the relationship between independent and dependent factors. Our statistical findings provide actionable scientific insights that clarify the underlying empirical dynamics.
+\BLOCK{endif}
+
+\section*{Introduction}
+\VAR{introduction}
+
+\BLOCK{if literature_review}
+\section*{Background and Literature}
+\VAR{literature_review_text}
+\BLOCK{endif}
+
+\section*{Materials and Methods}
+\VAR{methodology}
+
+\BLOCK{if variables_table}
+\VAR{variables_table}
+\BLOCK{endif}
+
+\section*{Results}
+\VAR{results_text}
+
+\BLOCK{if statistical_table}
+\VAR{statistical_table}
+\BLOCK{endif}
+
+\BLOCK{if figures_block}
+\VAR{figures_block}
+\BLOCK{endif}
+
+\section*{Discussion}
+\BLOCK{if discussion}
+\VAR{discussion}
+\BLOCK{else}
+The empirical results provide rigorous evidence directly addressing our study objectives. Potential confounding variables and boundary conditions are detailed in the analytical framework.
+\BLOCK{endif}
+
+\section*{Conclusion}
+\BLOCK{if conclusion}
+\VAR{conclusion}
+\BLOCK{else}
+We have presented an empirical investigation validating our core research hypotheses.
+\BLOCK{endif}
+
+\BLOCK{if has_bibliography}
+\bibliographystyle{plos2015}
+\bibliography{\VAR{bib_filename}}
+\BLOCK{endif}
+
+\end{document}

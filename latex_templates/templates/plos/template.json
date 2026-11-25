@@ -1,0 +1,9 @@
+{
+  "id": "plos",
+  "name": "PLOS ONE (Public Library of Science)",
+  "publisher": "PLOS",
+  "description": "PLOS ONE open access format with distinctive single-column margin geometry and author summary section.",
+  "document_class": "article",
+  "columns": 1,
+  "default_bib_style": "plos2015"
+}

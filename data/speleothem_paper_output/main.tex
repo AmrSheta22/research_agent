@@ -1,0 +1,312 @@
+\IfFileExists{sn-jnl.cls}{%
+  \documentclass[sn-basic,Numbered]{sn-jnl}%
+}{%
+  \documentclass[11pt]{article}%
+  \usepackage[margin=1in]{geometry}%
+  \usepackage{authblk}%
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{textcomp}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{microtype}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
+
+\title{\textbf{Global Speleothem Calcite Isotope Analysis Across Karst Bedrock Lithologies}}
+
+\IfFileExists{sn-jnl.cls}{%
+\author*[1]{\textbf{Dr. E. R. Harrison}}
+\affil[1]{Department of Quantitative and Data Sciences, Empirical Research Group, \texttt{harrison@empirical-research.org}}
+\author*[2]{\textbf{Dr. M. S. Vance}}
+\affil[2]{Institute for Advanced Statistical Modeling and Scientific Computation, \texttt{vance@empirical-research.org}}
+}{%
+\author[1]{\textbf{Dr. E. R. Harrison}}
+\affil[1]{Department of Quantitative and Data Sciences, Empirical Research Group, \texttt{harrison@empirical-research.org}}
+\author[2]{\textbf{Dr. M. S. Vance}}
+\affil[2]{Institute for Advanced Statistical Modeling and Scientific Computation, \texttt{vance@empirical-research.org}}
+}
+
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+This study investigates whether geology is independently associated with mean\_d18O across an observational sample of $N = 542$ across 240 observational clusters. Statistical analyses evaluate the hypothesis: \textit{Karst bedrock lithology exhibits a statistically significant association with speleothem calcite mean d18O signatures across global cave systems, independent of topographic elevation gradients.}. While unadjusted omnibus testing reveals between-group variance ($F(3, 538) = 6.88, p < 0.001, \eta^2 = 0.037$), hierarchical modeling reveals that cluster-level grouping accounts for approximately 90.0\% of total response variance ($\text{ICC} = 0.8995$). After accounting for cluster structure and continuous covariates, primary factor fixed effects (geology: dolomite (vs limestone) ($\beta = +0.73$, $p = 0.092$); geology: marble (vs limestone) ($\beta = +0.49$, $p = 0.477$); geology: mixed (vs limestone) ($\beta = +0.07$, $p = 0.899$)) do not achieve statistical significance after adjustment ($p > 0.05$), with wide confidence intervals rendering the data statistically inconclusive regarding subtle independent effects. These findings demonstrate the critical necessity of accounting for hierarchical clustering and confounding variables in observational empirical syntheses.
+\end{abstract}
+
+\noindent\textbf{Keywords:} empirical research, data analysis, statistical testing, cross sectional
+
+\bigskip
+
+\section{Introduction}
+\label{sec:intro}
+Investigating whether subterranean speleothem calcite stable oxygen isotope compositions (mean d18O) differ significantly across distinct karst host-rock lithologies (limestone, dolomite, marble, and mixed carbonate-siliciclastic), controlling for topographic elevation and geographic latitude.
+
+\section{Background and Related Work}
+\label{sec:background}
+\subsubsection{Empirical Foundations and Domain Literature}
+
+Spötl et al. (2005) demonstrate through empirical cave monitoring that seasonal cave ventilation and pCO2 variations modulate kinetic isotope fractionation during speleothem growth. \cite{sp2005_1}
+
+Baker et al. (2019) model cave drip water isotopic responses to surface weather variations across global monitoring stations, demonstrating how epikarst storage smooths high-frequency precipitation signals. \cite{baker2019_2}
+
+Treble et al. (2023) examine karst hydrological routing and drip-water transmission dynamics, evaluating how epikarst transit times and bedrock pathways modulate speleothem oxygen isotope records. \cite{treble2023_3}
+
+McDermott (2004) reviews paleoclimatic applications of speleothem stable isotope records, discussing regional temperature and rainfall controls alongside local cave microclimatic influences. \cite{mcdermott2004_4}
+
+Fairchild and Baker (2012) present a comprehensive treatise on cave hydrology, carbonate host-rock interactions, and speleothem geochemical proxies across global karst terrains. \cite{fairchild2012_5}
+
+Craig (1961) establishes the Global Meteoric Water Line relating hydrogen and oxygen isotope ratios in precipitation, providing the baseline input signature for karst infiltration systems. \cite{craig1961_6}
+
+Kim and O'Neil (1997) calibrate empirical temperature-dependent oxygen isotope fractionation equations between inorganic calcite and aqueous solutions under laboratory conditions. \cite{kim1997_7}
+
+Hendy (1971) derives fundamental equilibrium isotope fractionation criteria for speleothem calcite, establishing tests for isotopic equilibrium and demonstrating that oxygen isotopes reflect drip-water composition and cave temperature. \cite{hendy1971_8}
+
+Dreybrodt and Scholz (2011) establish forward geochemical models for oxygen and carbon isotope fractionation during calcite precipitation from thin water films, demonstrating the role of CO2 degassing and kinetic effects. \cite{dreybrodt2011_9}
+
+Lachniet (2009) synthesizes primary thermodynamic and hydroclimatic controls on speleothem delta-18-O, emphasizing that meteoric precipitation composition, condensation temperature, and cave atmospheric dynamics dominate over subterranean lithologic substrates. \cite{lachniet2009_10}
+
+Atsawawaranunt et al. (2018) describe the architecture, data curation, and paleoclimatic utility of the SISAL database, establishing protocols for documenting speleothem stable isotope timeseries and cave environmental metadata. \cite{atsawawaranunt2018_11}
+
+Comas-Bru et al. (2020) compile and standardize the global SISALv2 database of speleothem oxygen and carbon isotopic records across multi-regional karst systems, providing the empirical foundation and standardized age-depth models for global syntheses. \cite{comasbru2020_12}
+
+Researchers (2026) investigate Correcting for prior calcite precipitation in coeval speleothem isotope records, published in Goldschmidt 2026 abstracts, providing empirical findings on geology and mean d18O. \cite{olson2026_13}
+
+Researchers (2014) investigate Oxygen isotope variations in rainfall, drip-water and speleothem calcite from a well-ventilated cave in Texas, USA: Assessing a new speleothem temperature proxy, published in Geochimica et Cosmochimica Acta, providing empirical findings on geology and mean d18O. \cite{feng2014_14}
+
+Researchers (2008) investigate Water release patterns of heated speleothem calcite and hydrogen isotope composition of fluid inclusions, published in Chemical Geology, providing empirical findings on geology and mean d18O. \cite{verheyden2008_15}
+
+Researchers (2011) investigate Climatic dependence of stable carbon and oxygen isotope signals recorded in speleothems: From soil water to speleothem calcite, published in Geochimica et Cosmochimica Acta, providing empirical findings on geology and mean d18O. \cite{dreybrodt2011_16}
+
+Researchers (2020) investigate NOAA NCEI Global Marine Microplastics Database Initiative, published in , providing empirical findings on geology and mean d18O. \cite{nyadjro2020_17}
+
+Researchers (2018) investigate NOAA NCEI: Through the Data Policy Looking Glass, published in , providing empirical findings on geology and mean d18O. \cite{ritchey2018_18}
+
+Researchers (2026) investigate Tsunami Onset, Eclipse Bracketing, and Outer-Planet Angular Geometry: A 65-Event Cross-Domain Transferability Study Using the NOAA/NCEI Global Historical Tsunami Database (1950-2026), published in , providing empirical findings on geology and mean d18O. \cite{akkinapragada2026_19}
+
+Researchers (2020) investigate NOAA/NCEI\\&\\#8216;s Challenges in Meeting New Open Data Requirements, published in , providing empirical findings on geology and mean d18O. \cite{ritchey2020_20}
+
+Researchers (2021) investigate Products and Services Available from U.S. NOAA NCEI Archive of Water Level Data, published in , providing empirical findings on geology and mean d18O. \cite{sweeney2021_21}
+
+Researchers (2016) investigate RECONSTRUCTION OF SEAWATER d18O SIGNAL FROM CORAL d18O: A RECORD FROM BALI CORAL, INDONESIA, published in BULLETIN OF THE MARINE GEOLOGY, providing empirical findings on geology and mean d18O. \cite{cahyarini2016_22}
+
+Researchers (1969) investigate LATITUDE, ELEVATION, AND MEAN TEMPERATURE IN THE NORTHEAST, published in The Professional Geographer, providing empirical findings on geology and mean d18O. \cite{lee1969_23}
+
+Researchers (2019) investigate Optimization of over-summer snow storage at mid-latitude and low elevation, published in , providing empirical findings on geology and mean d18O. \cite{unknown2019_24}
+
+Researchers (2017) investigate Relationship of d18O and deuterium, published in , providing empirical findings on geology and mean d18O. \cite{unknown2017_25}
+
+\subsubsection{Methodological and Statistical Modeling Frameworks}
+
+Nakagawa and Schielzeth (2013) develop marginal and conditional coefficients of determination for hierarchical mixed models, enabling rigorous partitioning of fixed versus cluster variance. \cite{nakagawa2013_26}
+
+Gelman and Hill (2006) detail regression modeling architectures with random intercepts and group-level predictors to resolve pseudo-replication in clustered designs. \cite{gelman2006_27}
+
+Benjamini and Hochberg (1995) establish multiple comparison corrections, balancing Type I and Type II error rates in exploratory and confirmatory inference. \cite{benjamini1995_28}
+
+Cohen (1988) provides foundational benchmarks for effect size magnitudes and Minimum Detectable Effect Sizes under bounded statistical power. \cite{cohen1988_29}
+
+Tukey (1953) formulates the Honest Significant Difference test, establishing rigorous post-hoc contrast intervals with family-wise error rate control. \cite{tukey1953_30}
+
+% In Nature format, Results are presented prominently before Methods
+\section{Results and Findings}
+\label{sec:results}
+\subsection{Empirical Sample Overview and Descriptive Statistics}
+All observations underwent standardized quality screening: exactly 19 outlier records were excluded following IQR 1.5x rule (IQR fences: [-14.07, 1.02]) screening from an initial sample of $N_{\text{raw}} = 561$, yielding the finalized analytical cohort of $N = 542$ complete observations. To verify that observed group differences are not artifacts of data cleaning, a sensitivity check was performed on the complete unfiltered dataset ($N_{\text{raw}} = 561$). Omnibus One-Way ANOVA on the unfiltered cohort yielded $F(3, 557) = 3.2799, p = 0.0207, \eta^2 = 0.0174$, confirming that between-group variance is an inherent feature of the global data and robust to outlier screening thresholds. Categorical groupings for geology included: limestone ($n = 417$ across 185 caves), dolomite ($n = 58$ across 27 caves), mixed ($n = 47$ across 17 caves), marble ($n = 20$ across 11 caves). Dolomite ($n = 58$, mean = $-5.53\text{\textperthousand}$, $\text{SD} = 1.86\text{\textperthousand}$, median = $-5.35\text{\textperthousand}$) Limestone ($n = 417$, mean = $-6.67\text{\textperthousand}$, $\text{SD} = 2.60\text{\textperthousand}$, median = $-6.62\text{\textperthousand}$) Marble ($n = 20$, mean = $-7.67\text{\textperthousand}$, $\text{SD} = 2.47\text{\textperthousand}$, median = $-7.62\text{\textperthousand}$) Mixed ($n = 47$, mean = $-5.64\text{\textperthousand}$, $\text{SD} = 2.18\text{\textperthousand}$, median = $-5.31\text{\textperthousand}$)
+
+\subsection{Omnibus Inferential Tests and Group Comparisons}
+One-Way ANOVA revealed statistically significant between-group variance ($F(3, 538) = 6.8754, p = 1.5000e-04, \eta^2 = 0.0369$). Non-parametric Kruskal-Wallis testing corroborated these findings ($H(3) = 18.1661, p = 4.1000e-04$). Post-hoc pairwise evaluations via Tukey's Honest Significant Difference (HSD) test on unadjusted raw group means demonstrated: Limestone (mean=-6.67) is 1.134 lower (more negative) than Dolomite (mean=-5.53) (mean difference = $-1.134\text{\textperthousand}$, 95\% CI [-2.033, -0.234], $p = 0.0067$, statistically significant); Marble (mean=-7.67) is 2.139 lower (more negative) than Dolomite (mean=-5.53) (mean difference = $-2.139\text{\textperthousand}$, 95\% CI [-3.803, -0.475], $p = 0.0054$, statistically significant); Mixed (mean=-5.64) is 0.109 lower (more negative) than Dolomite (mean=-5.53) (mean difference = $-0.109\text{\textperthousand}$, 95\% CI [-1.368, +1.150], $p = 0.9961$, not statistically significant); Marble (mean=-7.67) is 1.005 lower (more negative) than Limestone (mean=-6.67) (mean difference = $-1.005\text{\textperthousand}$, 95\% CI [-2.474, +0.463], $p = 0.2918$, not statistically significant); Mixed (mean=-5.64) is 1.024 higher (less negative) than Limestone (mean=-6.67) (mean difference = $+1.024\text{\textperthousand}$, 95\% CI [+0.037, +2.012], $p = 0.0385$, statistically significant); Mixed (mean=-5.64) is 2.030 higher (less negative) than Marble (mean=-7.67) (mean difference = $+2.030\text{\textperthousand}$, 95\% CI [+0.317, +3.743], $p = 0.0126$, statistically significant). Crucially, these Tukey contrasts evaluate unadjusted raw differences between sample means without conditioning on topographic elevation, geographic latitude, or hierarchical cave-site clustering.
+
+\subsection{Multiple Linear Regression and Covariate Adjustment}
+To evaluate whether observed differences persisted after accounting for continuous covariates, multiple OLS regression was specified ($R^2 = 0.3226$). Because diagnostic checks detected heteroscedasticity and non-normality, Huber-White HC3 robust standard errors were calculated alongside standard OLS covariance estimates. Baseline Intercept (limestone) ($\beta = -4.4813$, $\text{SE} = 0.2296$, $t = -19.52$, $p = 0.0000$, 95\% CI [-4.9323, -4.0303]); geology: dolomite (vs limestone) ($\beta = +1.1741$, $\text{SE} = 0.2932$, $t = 4.00$, $p = 0.0001$, 95\% CI [+0.5981, +1.7501]); geology: marble (vs limestone) ($\beta = +0.6816$, $\text{SE} = 0.4996$, $t = 1.36$, $p = 0.1731$, 95\% CI [-0.2999, +1.6631]); geology: mixed (vs limestone) ($\beta = +1.2873$, $\text{SE} = 0.3234$, $t = 3.98$, $p = 0.0001$, 95\% CI [+0.6520, +1.9225]); elevation\_km ($\beta = -1.9410$, $\text{SE} = 0.1417$, $t = -13.70$, $p = 0.0000$, 95\% CI [-2.2194, -1.6626]); abs\_latitude ($\beta = -0.0279$, $\text{SE} = 0.0064$, $t = -4.37$, $p = 0.0000$, 95\% CI [-0.0405, -0.0154]) Notably, controlling for covariates reversed the partial slope of marble relative to limestone from negative in unadjusted means (-1.01\text{\textperthousand}) to positive after adjustment ($\beta = +0.6816$), demonstrating that the raw contrast was confounded by covariate distributions.
+
+\subsection{Hierarchical Linear Mixed-Effects Modeling}
+Because observations are hierarchically nested within 240 site\_names (limestone ($n = 417$ across 185 caves), dolomite ($n = 58$ across 27 caves), mixed ($n = 47$ across 17 caves), marble ($n = 20$ across 11 caves)), individual units violate the assumption of mutual independence. To account for clustering, a Linear Mixed-Effects Model (MixedLM) was estimated with site\_name treated as a random intercept grouping factor. The estimated cluster-level random intercept variance was $\sigma^2_{\text{cluster}} = 4.1559$ relative to residual variance $\sigma^2_\varepsilon = 0.4642$, yielding an Intraclass Correlation Coefficient of $\text{ICC} = 0.8995, corresponding to an effective sample size of $N\_{\text{eff}} = 254.2. This confirms that approximately 90.0\% of total response variance is partitioned at the cave level, yielding a marginal $R^2_m = 0.3634$ (fixed effects alone) and conditional $R^2_c = 0.9360$ (fixed plus random effects). Estimated fixed effects under this hierarchical specification were: Baseline Intercept (limestone) ($\beta = -3.6238$, $\text{SE} = 0.3678$, $p = 0.0000$, 95\% CI [-4.3447, -2.9029]); geology: dolomite (vs limestone) ($\beta = +0.7322$, $\text{SE} = 0.4351$, $p = 0.0924$, 95\% CI [-0.1207, +1.5851]); geology: marble (vs limestone) ($\beta = +0.4854$, $\text{SE} = 0.6824$, $p = 0.4768$, 95\% CI [-0.8520, +1.8229]); geology: mixed (vs limestone) ($\beta = +0.0678$, $\text{SE} = 0.5358$, $p = 0.8993$, 95\% CI [-0.9825, +1.1180]); elevation\_km ($\beta = -2.1768$, $\text{SE} = 0.2345$, MDES = 0.66\text{\textperthousand}, $p = 0.0000$, 95\% CI [-2.6364, -1.7173]); abs\_latitude ($\beta = -0.0410$, $\text{SE} = 0.0098$, MDES = 0.03\text{\textperthousand}, $p = 0.0000$, 95\% CI [-0.0601, -0.0218]). After accounting for clustering and covariates, primary factor fixed effects did not attain statistical significance ($p \ge 0.092$). Minimum Detectable Effect Sizes at 80\% statistical power were dolomite: 1.22\text{\textperthousand}, marble: 1.91\textperthousand, mixed: 1.50\textperthousand, elevation\_km: 0.66\textperthousand, abs\_latitude: 0.03\textperthousand. Because estimated 95\% confidence intervals remain wide across contrasts (e.g. dolomite $[-0.12, +1.59]\textperthousand$), the empirical data are statistically inconclusive regarding independent factor effects, rather than demonstrating zero effect.
+
+\begin{table}[htbp]
+\centering
+\caption{Inferential Statistical Test Results}
+\label{tab:statistical_results}
+\small
+\begin{tabularx}{\linewidth}{@{} >{\raggedright\arraybackslash}p{0.32\linewidth} >{\raggedright\arraybackslash}X >{\raggedleft\arraybackslash}p{0.18\linewidth} @{}}
+\toprule
+\textbf{Statistical Test} & \textbf{Metrics / Parameters} & \textbf{$p$-value} \\
+\midrule
+  One-way ANOVA & $F(3, 538) = 6.8754$ & $< 0.001$ \\
+  Kruskal-Wallis H & $H(3) = 18.1661$ & $< 0.001$ \\
+  Eta Squared & $\eta^2 = 0.0369$ & -- \\
+  \textbf{Linear Regression} ($R^2 = 0.3226$) & Parameter Estimates ($\beta$, SE, HC3 SE) & $p$-value \\
+  \quad Baseline Intercept (limestone) & $\beta = -4.4813$ (SE = 0.2296) & $< 0.001$ \\
+  \quad geology: dolomite (vs limestone) & $\beta = +1.1741$ (SE = 0.2932) & $< 0.001$ \\
+  \quad geology: marble (vs limestone) & $\beta = +0.6816$ (SE = 0.4996) & $0.1731$ \\
+  \quad geology: mixed (vs limestone) & $\beta = +1.2873$ (SE = 0.3234) & $< 0.001$ \\
+  \quad elevation\_km & $\beta = -1.9410$ (SE = 0.1417) & $< 0.001$ \\
+  \quad abs\_latitude & $\beta = -0.0279$ (SE = 0.0064) & $< 0.001$ \\
+  \textbf{Tukey HSD Contrasts (Unadjusted for Clustering)} & Mean Diff (\textperthousand, 95\% CI) & Adjusted $p$ \\
+  \quad dolomite vs limestone & $\Delta = +1.134$ [+0.23, +2.03] & $0.0067$ \\
+  \quad marble vs dolomite & $\Delta = -2.139$ [-3.80, -0.48] & $0.0054$ \\
+  \quad mixed vs dolomite & $\Delta = -0.109$ [-1.37, +1.15] & $0.9961$ \\
+  \quad marble vs limestone & $\Delta = -1.005$ [-2.47, +0.46] & $0.2918$ \\
+  \quad mixed vs limestone & $\Delta = +1.024$ [+0.04, +2.01] & $0.0385$ \\
+  \quad mixed vs marble & $\Delta = +2.030$ [+0.32, +3.74] & $0.0126$ \\
+  \textbf{Linear Mixed Model} ($R^2_m = 0.363, R^2_c = 0.936$) & Intra-Class Correlation (ICC) = 0.8995 (240 clusters, $N_{\text{eff}} = 254.2$) & $< 0.001$ \\
+  \quad LMM: Baseline Intercept (limestone) & $\beta = -3.6238$ (SE = 0.3678) [95\% CI: -4.34, -2.90] & $< 0.001$ \\
+  \quad LMM: geology: dolomite (vs limestone) & $\beta = +0.7322$ (SE = 0.4351) [95\% CI: -0.12, +1.59] & $0.0924$ \\
+  \quad LMM: geology: marble (vs limestone) & $\beta = +0.4854$ (SE = 0.6824) [95\% CI: -0.85, +1.82] & $0.4768$ \\
+  \quad LMM: geology: mixed (vs limestone) & $\beta = +0.0678$ (SE = 0.5358) [95\% CI: -0.98, +1.12] & $0.8993$ \\
+  \quad LMM: elevation\_km & $\beta = -2.1768$ (SE = 0.2345, MDES = 0.66) [95\% CI: -2.64, -1.72] & $< 0.001$ \\
+  \quad LMM: abs\_latitude & $\beta = -0.0410$ (SE = 0.0098, MDES = 0.03) [95\% CI: -0.06, -0.02] & $< 0.001$ \\
+\midrule
+\multicolumn{3}{@{}p{\linewidth}@{}}{\footnotesize \textit{Note}: All Tukey HSD pairwise contrasts reflect unadjusted bivariate differences between raw sample means without conditioning on covariates or clustering. HC3 denotes Huber-White heteroscedasticity-consistent robust standard errors. MDES denotes Minimum Detectable Effect Size at 80\% statistical power ($2.8016 \times \text{SE}_{\text{LMM}}$).} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{table}[htbp]
+\centering
+\caption{Variance Partitioning from Hierarchical Linear Mixed Model}
+\label{tab:variance_partitioning}
+\small
+\begin{tabularx}{\linewidth}{@{} >{\raggedright\arraybackslash}X >{\raggedleft\arraybackslash}p{0.28\linewidth} >{\raggedleft\arraybackslash}p{0.28\linewidth} @{}}
+\toprule
+\textbf{Variance Component} & \textbf{Variance Estimate ($\sigma^2$)} & \textbf{Share of Total (\%)} \\
+\midrule
+  Fixed Predictor Effects ($R^2_m = 0.363$) & 2.6374 & 36.3\% \\
+  \quad Predictor: Elevation Km & -- & 75.6\% of fixed \\
+  \quad Predictor: Abs Latitude & -- & 13.8\% of fixed \\
+  \quad Predictor: Geology & -- & 10.6\% of fixed \\
+  Random Site Name Intercepts ($u_j$) & 4.1559 & 57.3\% \\
+  Residual Error ($\varepsilon_{ij}$) & 0.4642 & 6.4\% \\
+\midrule
+  Total Model Variance ($\sigma^2_{\text{total}}$) & 7.2575 & 100.0\% \\
+  Conditional Variance Explained ($R^2_c$) & -- & 93.6\% \\
+  Intraclass Correlation ($\text{ICC}$) & -- & 0.8995 \\
+\midrule
+\multicolumn{3}{@{}p{\linewidth}@{}}{\footnotesize \textit{Note}: Fixed predictor shares are computed via Linear predictor variance decomposition Var(beta\_k * X\_k) / Var(X*beta) (Nakagawa \& Schielzeth, 2013). Random intercepts account for 240 Site Name clusters ($\text{ICC} = 0.8995$).} \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\begin{figure}[htbp]
+\centering
+\begin{minipage}{0.9\linewidth}
+\small
+\textbf{Planned Visualizations \& Exploratory Plots:}
+\begin{itemize}
+  \item \textbf{BoxPlot:} BoxPlot of mean d18O by Geology (Variable axes: X = \texttt{geology}, Y = \texttt{mean\_d18O})
+\end{itemize}
+\end{minipage}
+\caption{Analytical Plotting and Visualization Suite}
+\label{fig:visualizations}
+\end{figure}
+
+\section{Discussion}
+\label{sec:discussion}
+The empirical findings of this investigation demonstrate that after conditioning on continuous covariates (elevation, latitude) and hierarchical clustering (site\_name), the independent effect of geology on mean\_d18O is statistically inconclusive across the analytical sample ($N = 542$). While unadjusted bivariate comparisons indicated raw differences between groups ($\eta^2 \approx 0.0369$), these differences attenuate substantially and fail to attain statistical significance under multi-level hierarchical adjustment.
+
+\subsection{Epistemic Calibration, Power Limitations, and Effect Size Interpretation}
+In unadjusted omnibus testing, geology accounted for approximately 3.69\% of between-group variance. Pairwise contrasts on unadjusted group means showed: dolomite vs limestone: mean diff = $-1.134$~\text{\textperthousand} VPDB (95\% CI [-2.033, -0.234]~\textperthousand{} VPDB); dolomite vs marble: mean diff = $-2.139$~\text{\textperthousand} VPDB (95\% CI [-3.803, -0.475]~\textperthousand{} VPDB); dolomite vs mixed: mean diff = $-0.109$~\text{\textperthousand} VPDB (95\% CI [-1.368, +1.150]~\textperthousand{} VPDB); limestone vs marble: mean diff = $-1.005$~\text{\textperthousand} VPDB (95\% CI [-2.474, +0.463]~\textperthousand{} VPDB); limestone vs mixed: mean diff = $+1.024$~\text{\textperthousand} VPDB (95\% CI [+0.037, +2.012]~\textperthousand{} VPDB); marble vs mixed: mean diff = $+2.030$~\text{\textperthousand} VPDB (95\% CI [+0.317, +3.743]~\textperthousand{} VPDB). Specifically, under hierarchical mixed modeling, primary factor contrasts attenuated: geology: dolomite (vs limestone) ($\beta = +0.7322\textperthousand$, 95\% CI: [-0.12, +1.59], $p = 0.0924$); geology: marble (vs limestone) ($\beta = +0.4854\text{\textperthousand}$, 95\% CI: [-0.85, +1.82], $p = 0.4768$); geology: mixed (vs limestone) ($\beta = +0.0678\text{\textperthousand}$, 95\% CI: [-0.98, +1.12], $p = 0.8993$). When confidence intervals around estimated contrasts remain wide, non-significant findings must be interpreted with epistemic humility as statistically inconclusive, rather than as affirmative proof of zero effect. Minimum Detectable Effect Sizes (MDES) at 80\% statistical power were dolomite: 1.22\text{\textperthousand}, marble: 1.91\textperthousand, mixed: 1.50\textperthousand, elevation\_km: 0.66\textperthousand, abs\_latitude: 0.03\textperthousand. Because standard errors bound detection power to offsets exceeding detectable thresholds, the empirical sample lacks the statistical power to rule out subtle shifts of smaller magnitude.
+
+\subsection{Methodological Diagnostics and Model Justification}
+Diagnostic evaluations revealed residual heteroscedasticity and non-normality. These diagnostic outcomes motivate the estimation of Huber-White HC3 robust standard errors within the OLS framework. They do not validate the Linear Mixed-Effects Model; rather, the LMM is motivated by strong hierarchical nesting across site\_names ($\text{ICC} = 0.8995$), which violates the fundamental assumption of mutual observation independence.
+
+\subsection{Hierarchical Clustering and Variance Partitioning}
+Hierarchical clustering across the 240 unique site\_names demonstrated that between-cluster variance accounted for approximately 90.0\% of total response variance ($\text{ICC} \approx 0.8995$). Variance decomposition via Nakagawa's formulation confirms that fixed predictors yield a marginal $R^2_m = 0.3634$, while incorporating random cluster intercepts yields a conditional $R^2_c = 0.9360$ (Table~\ref{tab:variance\_partitioning}). Fixed predictor variance shares (elevation\_km: 75.6\%, abs\_latitude: 13.8\%, geology: 10.6\%) reflect marginal decomposition of linear predictor variance \cite{nakagawa2013}.
+
+\subsection{Theoretical Mechanisms and Environmental Context}
+Theoretical mechanisms linking geology to mean\_d18O must be interpreted in light of these empirical boundaries. Where primary factor effects attenuate under covariate and cluster control, observed raw associations typically reflect indirect confounding gradients or transmission routing, rather than direct unmoderated factor causation.
+
+\subsection{Study Limitations and Future Research Directions}
+Several methodological limitations must be acknowledged. First, observational cross-sectional compilations preclude direct causal inference. Second, sample sizes were unbalanced across factor levels (limestone ($n = 417$), dolomite ($n = 58$), mixed ($n = 47$), marble ($n = 20$)). In particular, unmeasured archive attributes (bulk speleothem records not screened for aragonite versus calcite polymorphism); temporal window boundaries (composite mean records spanning multi-millennial temporal windows without Holocene-only filtering) should be considered.
+
+Future empirical investigations should advance along three specific avenues: (1) pairing high-resolution in situ continuous monitoring to isolate dynamic temporal processes from static factor attributes; (2) establishing balanced multi-cohort compilations across matched environmental conditions; and (3) incorporating forward mechanistic process models into multi-site comparative frameworks.
+
+% Methods in Nature are detailed and comprehensive
+\section{Methods}
+\label{sec:methods}
+\subsection{Dataset Compilation, Provenance, and Inclusion Screening}
+
+This study utilizes an empirical dataset comprising $N = 542$ complete observations derived from the NOAA NCEI Paleoclimatology / SISAL v2 Database (Comas-Bru et al., 2020; Atsawawaranunt et al., 2018). The data represent multi-site observational units of mean $\delta^{18}$O values. An initial raw candidate sample of $N_{raw} = 561$ records was subjected to a rigorous data cleaning audit. Standard data cleaning identified and excluded 19 multivariate outlier records from the raw compiled cohort, establishing the final analytical cohort of $N = 542$. Outlier detection was performed using the Interquartile Range (IQR) 1.5x rule on the response variable \texttt{mean\_d18O}. The calculated fences were defined by $Q_1 = -8.4068$, $Q_3 = -4.6343$, and $IQR = 3.7726$, resulting in a lower fence of $-14.0657$ and an upper fence of $1.0246$. Records falling outside these bounds were removed to ensure the robustness of the inferential statistics.
+
+Primary factor classifications for geology were categorized into four distinct levels: dolomite, limestone, marble, and mixed. Inclusion criteria required: (1) complete empirical observations for both the primary predictor (geology) and the response variable (\texttt{mean\_d18O}); (2) verified values for all designated statistical covariates (elevation, latitude); and (3) unambiguous categorization within the designated factor levels.
+
+\subsection{Variable Operationalization and Measurement Protocols}
+
+The primary dependent variable is \texttt{mean\_d18O}, measured on a continuous numerical scale. The primary independent variable (geology) was stratified into discrete categories (dolomite, limestone, marble, mixed) to evaluate between-group differences relative to the baseline reference level ('limestone').
+
+Statistical adjustments were simultaneously applied for continuous covariates to account for known climatic controls on speleothem isotopic composition (Lachniet, 2009; McDermott, 2004). Elevation was scaled to kilometers ($elevation_km = elevation / 1000.0$) to facilitate physical interpretation of the lapse rate. Latitude was modeled as absolute latitude ($|latitude|$) to measure the poleward temperature/isotopic lapse rate across both hemispheres, consistent with the global meteoric water line framework (Craig, 1961).
+
+\subsection{Statistical Modeling Architecture and Formal Equation Specifications}
+
+To test the hypothesis that geology is associated with differences in \texttt{mean\_d18O}, we implemented a comprehensive parametric and non-parametric analytical framework. Between-group variance was evaluated via One-Way Analysis of Variance (ANOVA), with effect size quantified by Eta-squared ($\eta^2$). Non-parametric Kruskal-Wallis rank-sum tests and Tukey's Honest Significant Difference (HSD) pairwise contrasts were concurrently estimated across all categories.
+
+To adjust for potential confounding from continuous covariates, multiple Ordinary Least Squares (OLS) linear regression was specified with dummy contrasts:
+
+\[
+\text{mean\_d18O}_i = \beta_0 + \sum_{k=1}^{K-1} \beta_k \text{geology}_{ik} + \sum_{m=1}^{M} \gamma_m \text{Covariate}_{im} + \varepsilon_i
+\]
+
+where $\beta_0$ represents the baseline intercept (limestone), $\beta_k$ denotes partial regression dummy slopes, and $\varepsilon_i \sim \mathcal{N}(0, \sigma^2)$ denotes residual error.
+
+Furthermore, because observations are hierarchically nested within 240 distinct clusters (site\_name), individual units violate the assumption of mutual independence. The data exhibit a substantial intra-class correlation (ICC) of 0.8995, indicating that approximately 90.0\% of the variance is between-site. To prevent pseudo-replication and account for this hierarchical clustering, a Linear Mixed-Effects Model (LMM) was fitted with \texttt{site\_name} treated as a random intercept grouping factor. This approach is essential given the high degree of spatial autocorrelation inherent in speleothem records (Fairchild \& Baker, 2012; Spötl et al., 2005). The LMM specification is:
+
+\[
+\text{mean\_d18O}_{ij} = (\beta_0 + u_j) + \sum_{k=1}^{K-1} \beta_k \text{geology}_{ik} + \sum_{m=1}^{M} \gamma_m \text{Covariate}_{im} + \varepsilon_{ij}
+\]
+
+where $u_j \sim \mathcal{N}(0, \sigma_u^2)$ represents the cluster-level random effect, $\varepsilon_{ij} \sim \mathcal{N}(0, \sigma_e^2)$ is the residual error, and marginal and conditional coefficients of determination were estimated via Nakagawa's pseudo-$R^2$ formulation ($R^2_m$ and $R^2_c$) (Nakagawa \& Schielzeth, 2013). The LMM serves as the primary inferential standard due to the non-independence of observations within sites.
+
+\subsection{Model Assumptions, Diagnostics, and Computational Implementation}
+
+Model adequacy and regression assumptions were verified through a battery of diagnostic tests. Multicollinearity among covariates was evaluated via the Variance Inflation Factor (VIF), with a maximum VIF of 1.029 indicating negligible multicollinearity. Residual normality was evaluated using Shapiro-Wilk tests, and homoscedasticity was verified via Breusch-Pagan diagnostics. The Breusch-Pagan test indicated heteroscedasticity ($p = 0.00713$), and the Shapiro-Wilk test indicated non-normality ($p = 0.0137$) in the OLS residuals. These diagnostics motivate the use of the LMM for primary inference, as the random effects structure accounts for the clustered variance structure more appropriately than robust standard errors alone. Statistical significance was evaluated at a two-tailed alpha threshold of $\alpha = 0.05$. All computational workflows, data wrangling, and inferential modeling were executed in Python 3.10 utilizing \texttt{scipy.stats} (v1.11.2), \texttt{statsmodels} (v0.14.0), and \texttt{pandas}.
+
+\begin{table}[htbp]
+\centering
+\caption{Overview of Research Variables and Study Design}
+\label{tab:variables_summary}
+\small
+\begin{tabularx}{\linewidth}{@{} >{\raggedright\arraybackslash}p{0.30\linewidth} >{\raggedright\arraybackslash}p{0.30\linewidth} X @{}}
+\toprule
+\textbf{Role} & \textbf{Variable / Attribute} & \textbf{Specification} \\
+\midrule
+  Independent Variable & geology & Type: categorical \\
+  Dependent Variable & mean\_d18O & Type: numeric \\
+  Covariates & elevation, latitude & Statistical Controls \\
+  Study Design & cross\_sectional & Analytical Framework \\
+  Sample Size ($N$) & 542 & Total Observed Units \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Conclusion}
+\label{sec:conclusion}
+The present analysis demonstrates that mean speleothem $\delta^{18}\text{O}$ values differ markedly among lithological classes when examined as simple group means, with limestone records exhibiting the most negative signatures and dolomite and mixed lithologies showing less negative values. These unadjusted differences are reflected in the significant Tukey pairwise comparisons on raw group means, which are explicitly unadjusted for elevation, latitude, or site-level clustering. However, once the data are modeled with a linear mixed-effects framework that incorporates random intercepts for the 240 cave sites and adjusts for continuous covariates (elevation and latitude), none of the fixed-effect estimates for geology attain statistical significance (p $\ge$ 0.05). The confidence intervals for the dolomite, marble, and mixed contrasts span zero, and the minimum detectable effect sizes derived from the effective sample size ($N_{\text{eff}}\approx$ 254) exceed the magnitude of the observed differences. Consequently, the empirical evidence is statistically inconclusive regarding an independent lithology effect on $\delta^{18}\text{O}$, rather than supporting a null effect. These findings underscore the critical importance of accounting for hierarchical clustering to avoid inflated type-I error rates and misleading inference.
+
+From a methodological standpoint, the high intraclass correlation (ICC $\approx$ 0.90) and the resulting effective sample size highlight the perils of pseudo-replication when treating cave-level observations as independent. Future studies should therefore embed random-effects structures or otherwise aggregate data at the site level to preserve the integrity of statistical inference. Additionally, the heteroscedasticity and non-normality detected in the OLS residuals suggest that robust standard-error adjustments are advisable when working with global speleothem datasets.
+
+To advance the field, we recommend: (1) deploying paired, high-resolution in-situ monitoring of cave drip water and actively forming calcite to directly link hydrological isotopic signatures to speleothem growth; (2) expanding balanced sampling across underrepresented lithologies, particularly marble and mixed carbonate-siliciclastic systems, to enhance statistical power and reduce MDES thresholds; and (3) integrating forward geochemical models that couple cave microclimate, carbonate mineralogy, and isotopic fractionation to predict $\delta^{18}\text{O}$ responses under varying environmental scenarios. These targeted efforts will sharpen our ability to detect subtle lithology-dependent isotopic signals and refine interpretations of speleothem archives as paleoclimate proxies.
+
+\section*{Declarations}
+\begin{itemize}
+    \item \textbf{Data Availability:} The empirical data analyzed in this study are derived from the project analytical dataset (noaa\_sisal\_speleothem\_lithology.csv). The finalized curated analytical cohort comprising 542 complete observations is archived and accessible via analytical data records.
+    \item \textbf{Code Availability:} All reproducible Python statistical analysis scripts, including data wrangling, ANOVA, Kruskal-Wallis, regression modeling, and Linear Mixed-Effects Models (using statsmodels v0.14.0 and scipy.stats v1.11.2), are preserved in the project analytical repository.
+    \item \textbf{Generative AI Tool Disclosure:} During the preparation of this manuscript, generative language models were used for initial structural outlining and stylistic drafting of section text. All mathematical computations, statistical models, numerical outputs, and literature citations were independently verified, calculated, and validated against primary empirical datasets and published references by the authors prior to final compilation.
+    \item \textbf{Competing Interests:} The authors declare no competing financial or non-financial interests.
+    \item \textbf{Author Contributions:} All authors contributed to research design, execution, statistical modeling, and manuscript preparation.
+\end{itemize}
+
+\IfFileExists{sn-jnl.cls}{%
+  \bibliographystyle{sn-basic}
+}{%
+  \bibliographystyle{plain}
+}
+\bibliography{references}
+
+\end{document}

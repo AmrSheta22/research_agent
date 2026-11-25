@@ -1,0 +1,99 @@
+\IfFileExists{IEEEtran.cls}{%
+  \documentclass[conference]{IEEEtran}%
+}{%
+  \documentclass[10pt,twocolumn]{article}%
+  \usepackage[margin=0.75in]{geometry}%
+}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+
+% Fallback commands if IEEEtran is not loaded
+\providecommand{\IEEEauthorblockN}[1]{#1\\}
+\providecommand{\IEEEauthorblockA}[1]{#1}
+\providecommand{\IEEEkeywords}[1]{\vspace{0.5em}\noindent\textbf{\textit{Index Terms---}} #1}
+
+\begin{document}
+
+\title{\VAR{title}}
+
+\author{%
+\BLOCK{for author in authors}
+  \IEEEauthorblockN{\VAR{author.name}}%
+  \IEEEauthorblockA{\textit{\VAR{author.affiliation}}%
+  \BLOCK{if author.email}\\ \texttt{\VAR{author.email}}\BLOCK{endif}}%
+  \BLOCK{if not loop.last}\and\BLOCK{endif}
+\BLOCK{endfor}
+}
+
+\maketitle
+
+\begin{abstract}
+\VAR{abstract}
+\end{abstract}
+
+\BLOCK{if keywords}
+\begin{IEEEkeywords}
+\VAR{keywords_joined}
+\end{IEEEkeywords}
+\BLOCK{endif}
+
+\section{Introduction}
+\label{sec:intro}
+\VAR{introduction}
+
+\BLOCK{if literature_review}
+\section{Related Work}
+\label{sec:related}
+\VAR{literature_review_text}
+\BLOCK{endif}
+
+\section{Methodology and Study Design}
+\label{sec:methodology}
+\VAR{methodology}
+
+\BLOCK{if variables_table}
+\VAR{variables_table}
+\BLOCK{endif}
+
+\section{Statistical Testing and Results}
+\label{sec:results}
+\VAR{results_text}
+
+\BLOCK{if statistical_table}
+\VAR{statistical_table}
+\BLOCK{endif}
+
+\BLOCK{if figures_block}
+\VAR{figures_block}
+\BLOCK{endif}
+
+\BLOCK{if discussion}
+\section{Discussion}
+\label{sec:discussion}
+\VAR{discussion}
+\BLOCK{endif}
+
+\BLOCK{if conclusion}
+\section{Conclusion}
+\label{sec:conclusion}
+\VAR{conclusion}
+\BLOCK{endif}
+
+\BLOCK{if has_bibliography}
+\bibliographystyle{IEEEtran}
+\bibliography{\VAR{bib_filename}}
+\BLOCK{endif}
+
+\end{document}

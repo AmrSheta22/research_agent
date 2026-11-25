@@ -1,0 +1,9 @@
+{
+  "id": "elsevier",
+  "name": "Elsevier Journal (elsarticle)",
+  "publisher": "Elsevier",
+  "description": "Standard Elsevier article template for ScienceDirect, Lancet family, and Elsevier journals.",
+  "document_class": "elsarticle",
+  "columns": 1,
+  "default_bib_style": "elsarticle-num"
+}
